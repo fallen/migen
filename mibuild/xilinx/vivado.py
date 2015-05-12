@@ -85,6 +85,7 @@ class XilinxVivadoToolchain:
             tcl.append("add_files " + filename)
             tcl.append("set_property library {} [get_files {}]".format(library, filename))
 
+        tcl.append("set_param general.maxThreads 1")
         tcl.append("read_xdc {}.xdc".format(build_name))
         tcl.extend(c.format(build_name=build_name) for c in self.pre_synthesis_commands)
         tcl.append("synth_design -top top -part {} -include_dirs {{{}}}".format(platform.device, " ".join(platform.verilog_include_paths)))
